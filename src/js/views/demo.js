@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 
 import { Context } from "../store/appContext";
@@ -6,38 +6,48 @@ import { Context } from "../store/appContext";
 import "../../styles/demo.css";
 
 export const Demo = () => {
-	const { store, actions } = useContext(Context);
+	
+    const { store, actions } = useContext(Context);
+    const [form, setForm] = useState({
+        fullName: "",
+        email: "",
+        phone: "",
+        address: ""
+    });
 
-	return (
-		<div className="container">
-			<ul className="list-group">
-				{store.demo.map((item, index) => {
-					return (
-						<li
-							key={index}
-							className="list-group-item d-flex justify-content-between"
-							style={{ background: item.background }}>
-							<Link to={"/single/" + index}>
-								<span>Link to: {item.title}</span>
-							</Link>
-							{// Conditional render example
-							// Check to see if the background is orange, if so, display the message
-							item.background === "orange" ? (
-								<p style={{ color: item.initial }}>
-									Check store/flux.js scroll to the actions to see the code
-								</p>
-							) : null}
-							<button className="btn btn-success" onClick={() => actions.changeColor(index, "orange")}>
-								Change Color
-							</button>
-						</li>
-					);
-				})}
-			</ul>
-			<br />
-			<Link to="/">
-				<button className="btn btn-primary">or te back to Back contact</button>
-			</Link>
-		</div>
-	);
+    const handleChange = e => {
+        setForm({
+            ...form,
+            [e.target.name]: e.target.value
+        });
+    };
+
+	const handleSubmit = e => {
+		e.preventDefault();
+		actions.saveContact(form);
+		setForm({ fullName: "", email: "", phone: "", address: "" }); // limpar o formulário
+	};
+	
+    return (
+        <div className="container">
+            <h1 className="text-center mt-5">Add a new contact</h1>
+            <form onSubmit={handleSubmit} class="mb-3">
+			    <label class="form-label mt-4">Full Name</label>
+                <input class="form-control" type="text " name="fullName" placeholder="Full Name" onChange={handleChange} />
+				<label class="form-label mt-4">Email</label>
+                <input class="form-control" type="email" name="email" placeholder="Enter Email" onChange={handleChange} />
+				<label class="form-label mt-4">Phone</label>
+                <input class="form-control" type="tel" name="phone" placeholder="Enter Phone" onChange={handleChange} />
+				<label class="form-label mt-4">Address</label>
+                <input class="form-control" type="text" name="address" placeholder="Enter Address" onChange={handleChange} />
+                <button className="btn btn-primary form-control mt-4" type="submit">Salvar</button>
+            </form>
+            <br />
+            <div>
+                <Link to="/" >
+				<p><a class="link-opacity-100 " href="#">Voltar para Contato</a></p>
+                </Link>
+            </div>
+        </div>
+    );
 };
