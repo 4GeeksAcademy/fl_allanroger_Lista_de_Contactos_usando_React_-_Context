@@ -22,11 +22,12 @@ export const Contact = () => {
                         <div className="d-flex" >
                             <img src="https://th.bing.com/th/id/OIG.MTLFSwxDyHmk8MFUfjej?w=270&h=270&c=6&r=0&o=5&pid=ImgGn" alt="Profile" className="img-fluid rounded-circle car-img-left" style={{width: "200px", height: "200px"}} />
                             <div className="card-body ml-3">
-                                <h2>{contact.fullName}</h2>
+                                <h2>{contact.full_name}</h2>
                                 <p>Email: {contact.email}</p>
                                 <p>Telefone: {contact.phone}</p>
                                 <p>Endereço: {contact.address}</p>
-                                <button className="btn btn-danger" onClick={() => actions.openModal(index)}>Eliminar</button>
+                                <button className="btn btn-danger" onClick={() => actions.deleteContact(contact.id)}>Eliminar</button>
+                                {/* <button className="btn btn-danger" onClick={() => actions.openModal(index)}>Eliminar</button> */}
                                 <Link to={`/edit/${index}`}>
                                     <button className="btn btn-warning">Editar</button>
                                 </Link>
@@ -36,7 +37,11 @@ export const Contact = () => {
                 ))}
             </div>
 
-            
+           {/* <button className="btn btn-danger" onClick={() => actions.deleteContact(contact.id)}>Eliminar</button>
+<Link to={`/edit/${contact.id}`}>
+    <button className="btn btn-warning">Editar</button>
+</Link>  */}
+
             <Modal
                 isOpen={store.modalIsOpen}
                 onRequestClose={actions.closeModal}

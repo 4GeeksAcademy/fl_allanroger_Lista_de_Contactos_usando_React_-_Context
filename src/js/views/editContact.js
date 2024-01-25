@@ -3,11 +3,13 @@ import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 export const EditContact = () => {
     const { store, actions } = useContext(Context);
     const { index } = useParams(); // Obtem o índice do URL
     const [contact, setContact] = useState(store.contacts[index]);
+    const navigate = useNavigate()
 
     useEffect(() => {
         setContact(store.contacts[index]);
@@ -19,15 +21,17 @@ export const EditContact = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        actions.editContact(index, contact);
+        actions.editContact(contact.id, contact);
+        navigate("/");
     };
+    
 
         return (
             <div className="container" onSubmit={handleSubmit}>
                 <h1 className="text-center mt-5">Edit Contact</h1>
             <form onSubmit={handleSubmit} className="mb-3">
                 <label className="form-label mt-4">Full Name</label>
-                <input className="form-control" type="text" name="fullName" value={contact.fullName} onChange={handleInputChange} />
+                <input className="form-control" type="text" name="full_name" value={contact.full_name} onChange={handleInputChange} />
                 <label className="form-label mt-4">Email</label>
                 <input className="form-control" type="text" name="email" value={contact.email} onChange={handleInputChange} />
                 <label className="form-label mt-4">Phone</label>
