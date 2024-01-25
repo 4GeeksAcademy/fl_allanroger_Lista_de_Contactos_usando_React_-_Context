@@ -18,7 +18,7 @@ const injectContext = PassedComponent => {
 		);
 
 		useEffect(() => {
-			// Você pode fazer suas solicitações ajax ou fetch api aqui
+			state.actions.loadContacts()
 		}, []);
 
 		return (

@@ -3,9 +3,10 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/contact.css";
 import { Link } from "react-router-dom";
+import Modal from 'react-modal';
 
 export const Contact = () => {
-    const { store, actions } = useContext(Context); // Adicione actions aqui
+    const { store, actions } = useContext(Context);
 
     return (
         <div>
@@ -14,7 +15,6 @@ export const Contact = () => {
                     <button className="btn btn-success">Add new contact</button>
                 </Link>
             </div>
-              {/* https://randomuser.me/api/portraits/lego/1.jpg */}
             <div>
                 <h1 className="mb-4 position-absolute top-1 start-50 translate-middle-x">CONTACT!</h1>
                 {store.contacts.map((contact, index) => (
@@ -26,15 +26,26 @@ export const Contact = () => {
                                 <p>Email: {contact.email}</p>
                                 <p>Telefone: {contact.phone}</p>
                                 <p>Endereço: {contact.address}</p>
-                                <button className="btn btn-danger" onClick={() => actions.deleteContact(index)}>Eliminar</button> {/* Adicione este botão */}
+                                <button className="btn btn-danger" onClick={() => actions.openModal(index)}>Eliminar</button>
                                 <Link to={`/edit/${index}`}>
-                                    <button className="btn btn-warning">Editar</button> {/* Adicione este botão */}
+                                    <button className="btn btn-warning">Editar</button>
                                 </Link>
                             </div>
                         </div>
                     </div>
                 ))}
             </div>
+
+            
+            <Modal
+                isOpen={store.modalIsOpen}
+                onRequestClose={actions.closeModal}
+                contentLabel="Example Modal"
+            >
+                <h2>Tem certeza de que deseja excluir este contato?</h2>
+                <button onClick={actions.handleDelete}>Sim</button>
+                <button onClick={actions.closeModal}>Não</button>
+            </Modal>
         </div>
     );
 };
