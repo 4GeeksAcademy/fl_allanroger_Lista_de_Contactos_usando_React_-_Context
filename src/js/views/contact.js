@@ -1,5 +1,5 @@
 // arquivo contact.js
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/contact.css";
 import { Link } from "react-router-dom";
@@ -7,6 +7,10 @@ import Modal from 'react-modal';
 
 export const Contact = () => {
     const { store, actions } = useContext(Context);
+
+    useEffect(() => {
+        actions.loadContacts()
+    },[store.contacts]) 
 
     return (
         <div>

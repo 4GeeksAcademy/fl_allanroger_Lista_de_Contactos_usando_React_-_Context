@@ -31,44 +31,44 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             loadContacts: () => {
                 fetch("https://playground.4geeks.com/apis/fake/contact/agenda/allan")
-                .then((response) => response.json())
-                .then((response) => {
-                    setStore({contacts: response})
-                })
-                .catch(error => console.log("error" ,error))
+                    .then((response) => response.json())
+                    .then((response) => {
+                        setStore({ contacts: response })
+                    })
+                    .catch(error => console.log("error", error))
             },
             // Função para editar um contato
-editContact: (contact_id, updatedContact) => {
-    fetch(`https://playground.4geeks.com/apis/fake/contact/${contact_id}`, {
-        method: "PUT",
-        body: JSON.stringify(updatedContact),
-        headers: {
-            "Content-Type": "application/json"
-        }
-    })
-    .then((response) => response.json())
-    .then((response) => {
-        const store = getStore();
-        const newContacts = store.contacts.map(contact => 
-            contact.id === contact_id ? response : contact
-        );
-        setStore({ contacts: newContacts });
-    })
-    .catch(error => console.log("error" ,error))
-},
+            editContact: (contact_id, updatedContact) => {
+                fetch(`https://playground.4geeks.com/apis/fake/contact/${contact_id}`, {
+                    method: "PUT",
+                    body: JSON.stringify(updatedContact),
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                })
+                    .then((response) => response.json())
+                    .then((response) => {
+                        const store = getStore();
+                        const newContacts = store.contacts.map(contact =>
+                            contact.id === contact_id ? response : contact
+                        );
+                        setStore({ contacts: newContacts });
+                    })
+                    .catch(error => console.log("error", error))
+            },
 
-// Função para excluir um contato
-deleteContact: (contact_id) => {
-    fetch(`https://playground.4geeks.com/apis/fake/contact/${contact_id}`, {
-        method: "DELETE"
-    })
-    .then(() => {
-        const store = getStore();
-        const newContacts = store.contacts.filter(contact => contact.id !== contact_id);
-        setStore({ contacts: newContacts });
-    })
-    .catch(error => console.log("error" ,error))
-},
+            // Função para excluir um contato
+            deleteContact: (contact_id) => {
+                fetch(`https://playground.4geeks.com/apis/fake/contact/${contact_id}`, {
+                    method: "DELETE"
+                })
+                    .then(() => {
+                        const store = getStore();
+                        const newContacts = store.contacts.filter(contact => contact.id !== contact_id);
+                        setStore({ contacts: newContacts });
+                    })
+                    .catch(error => console.log("error", error))
+            },
 
         }
     };
